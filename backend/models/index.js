@@ -43,9 +43,6 @@ db.answers.belongsTo(db.users, { foreignKey: 'studentId' });
 db.courses.hasMany(db.assignments, { foreignKey: 'courseId' });
 db.assignments.belongsTo(db.courses, { foreignKey: 'courseId' });
 
-db.courses.hasMany(db.answers, { foreignKey: 'courseId' });
-db.answers.belongsTo(db.courses, { foreignKey: 'courseId' });
-
 db.assignments.hasMany(db.answers, { foreignKey: 'assignmentId' });
 db.answers.belongsTo(db.assignments, { foreignKey: 'assignmentId' });
 

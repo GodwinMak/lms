@@ -1,12 +1,40 @@
 const db = require("../models")
 
+const bcrypt = require("bcrypt");
+
 const User = db.users;
 // Create a new user
 exports.createUser = async (req, res) => {
   try {
     const { firstName, middleName, lastName, password, role, studentId, teacherId } = req.body;
-    const user = await User.create({ firstName, middleName, lastName, password, role, studentId, teacherId });
-    res.status(201).json(user);
+    
+
+    let user;
+
+    if(studentId){
+      user = await User.findOne({ where: { studentId } });
+      if (user) return res.status(400).json({ error: "Student ID already exists" });
+    
+    }else if(teacherId){
+        user = await User.findOne({ where: { teacherId } });
+        if (user) return res.status(400).json({ error: "Teacher ID already exists" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create the user
+    await User.create({
+      firstName,
+      middleName,
+      lastName,
+      password: hashedPassword,
+      role,
+      studentId: studentId || null,
+      teacherId: teacherId || null
+    });
+    
+    res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -36,11 +64,11 @@ exports.getUserById = async (req, res) => {
 // Update a user
 exports.updateUser = async (req, res) => {
   try {
-    const { firstName, middleName, lastName, password, role, studentId, teacherId } = req.body;
+    // const { firstName, middleName, lastName, password, role, studentId, teacherId } = req.body;
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    await user.update({ firstName, middleName, lastName, password, role, studentId, teacherId });
+    await user.update(req.body);
     res.json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
