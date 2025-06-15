@@ -1,44 +1,88 @@
 const db = require("../models")
 
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 
 const User = db.users;
 // Create a new user
 exports.createUser = async (req, res) => {
   try {
-    const { firstName, middleName, lastName, password, role, studentId, teacherId } = req.body;
+    const { firstName, middleName, lastName, password, role, Id, } = req.body;
     
 
-    let user;
+    let data;
 
-    if(studentId){
-      user = await User.findOne({ where: { studentId } });
-      if (user) return res.status(400).json({ error: "Student ID already exists" });
+    if(role === "student"){
+      data = await User.findOne({ where: { userId: Id } });
+      if (data) return res.status(400).json({ error: "Student ID already exists" });
     
-    }else if(teacherId){
-        user = await User.findOne({ where: { teacherId } });
-        if (user) return res.status(400).json({ error: "Teacher ID already exists" });
+    }else if(role === "teacher"){
+        data = await User.findOne({ where: { userId : Id } });
+        if (data) return res.status(400).json({ error: "Teacher ID already exists" });
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user
-    await User.create({
-      firstName,
-      middleName,
-      lastName,
-      password: hashedPassword,
-      role,
-      studentId: studentId || null,
-      teacherId: teacherId || null
-    });
+
+    let user
+
+    if(role === "student"){
+      user = await User.create({
+        firstName,
+        middleName,
+        lastName,
+        password: hashedPassword,
+        role,
+        userId: Id || null,
+      });
+    }
+
+    else if(role === "teacher"){
+      user = await User.create({
+        firstName,
+        middleName,
+        lastName,
+        password: hashedPassword,
+        role,
+        userId: Id || null,
+      });
+    }
     
-    res.status(201).json({ message: "User created successfully" });
+    const token = jwt.sign({ Id }, process.env.JWT_SECRET);
+    res.status(201).json({ message: "User created successfully", token, user});
   } catch (error) {
+
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
+
+
+exports.login = async(req,res) =>{
+  try {
+    const {Id, password,} = req.body;
+  
+   const user =  await User.findOne({ where: { userId: Id } });
+
+   if(!user) {
+    return res.status(404).json({ error: "User not found" });
+   }
+
+   const validPassword = await bcrypt.compare(password, user.password);
+   if (!validPassword) {
+    return res.status(400).send({ message: "Invalid password" });
+  }
+
+  const token = jwt.sign({ Id }, process.env.JWT_SECRET);
+  res.status(200).send({ message: "Login successful", token, user });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ error: error.message });
+  }
+}
 
 // Get all users
 exports.getAllUsers = async (req, res) => {

@@ -21,15 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("student", "teacher"),
         allowNull: false,
       },
-      studentId: {
+      userId: {
         type: DataTypes.STRING,
         allowNull: true,
-        unique: true,
-      },
-      teacherId: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        unique: true,
       },
     }));
   };

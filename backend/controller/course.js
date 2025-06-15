@@ -1,6 +1,7 @@
 const db = require("../models");
 
 const Course = db.courses;
+const Assignments = db.assignments
 
 // Create a new course
 exports.createCourse = async (req, res) => {
@@ -26,7 +27,15 @@ exports.getAllCourses = async (req, res) => {
 // Get course by ID
 exports.getCourseById = async (req, res) => {
   try {
-    const course = await Course.findByPk(req.params.id);
+    const course = await Course.findByPk(req.params.id, {
+      include: [
+        {
+          model: Assignments,
+          as: "Assignments",
+          order: [["createdAt", "DESC"]],
+        },
+      ],
+    });
     if (!course) return res.status(404).json({ error: "Course not found" });
     res.json(course);
   } catch (error) {
@@ -48,7 +57,7 @@ exports.updateCourse = async (req, res) => {
   }
 };
 
-// Delete a course
+// Delete a course   
 exports.deleteCourse = async (req, res) => {
   try {
     const course = await Course.findByPk(req.params.id);

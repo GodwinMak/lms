@@ -7,13 +7,13 @@ const Course = db.courses;
 
 exports.createAnswer = async (req, res) => {
   try {
-    const { assignmentId, courseId, studentId } = req.body;
+    const { assignmentId, courseId, Id } = req.body;
     const answerDoc = req.file ? req.file.filename : null;
 
     const answer = await Answer.create({
       assignmentId,
       courseId,
-      studentId,
+      Id,
       answerDoc,
     });
 

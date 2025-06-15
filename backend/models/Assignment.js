@@ -13,10 +13,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     }, 
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     // store file path or URL
     assignmentDescription: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("active", "inactive"),
+      allowNull: false,
+      defaultValue: "active",
+    }
   }));
 };
