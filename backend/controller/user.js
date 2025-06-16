@@ -111,7 +111,12 @@ exports.updateUser = async (req, res) => {
     // const { firstName, middleName, lastName, password, role, studentId, teacherId } = req.body;
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: "User not found" });
-
+    const {password} = req.body;
+    if(password){
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      req.body.password = hashedPassword;
+    } 
     await user.update(req.body);
     res.json(user);
   } catch (error) {
@@ -131,3 +136,23 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const {oldPassword, newPassword} = req.body
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    const validPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: "Invalid old password" });
+    }
+    // Hash the new password
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password
+    await user.update({ password: hashedNewPassword });
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

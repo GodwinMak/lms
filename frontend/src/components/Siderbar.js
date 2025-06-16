@@ -5,8 +5,20 @@ import { IoIosLogOut } from "react-icons/io";
 import { FaChartBar, FaUsersCog, FaListAlt } from "react-icons/fa";
 import { BiTask } from "react-icons/bi";
 import { IoIosSettings } from "react-icons/io";
+import {useAuthContext} from "../hooks/useAuthContext"
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isSidebarOpen }) => {
+
+  const navigate = useNavigate();
+  const {dispatch} = useAuthContext();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userData");
+    dispatch({ type: "SIGN_OUT" });
+    navigate("/"); // or your login route
+  };
   const user = JSON.parse(localStorage.getItem("userData"));
   const role = user?.role; // e.g., 'student' or 'teacher'
 
@@ -37,6 +49,12 @@ const Sidebar = ({ isSidebarOpen }) => {
       },
       view: "All",
     },
+    {
+      href: "/dashboard/students",
+      icon: FaUsersCog,
+      text: "Students",
+      view: "teacher",
+    }
   ];
 
   const filteredLinks = links.filter(
@@ -54,7 +72,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           {filteredLinks.map((link, index) => (
             <LinkItem key={index} {...link} />
           ))}
-          <li>
+          <li onClick={handleLogout}>
             <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
               <IoIosLogOut className="mr-2" />
               <span className="flex-1 me-3">Logout</span>

@@ -9,6 +9,9 @@ import Course from './components/Course';
 import CreateCourse from './components/Course/CreateCourse';
 import CreateAssignment from './components/Assignment/CreateAssignement';
 import ViewCourse from './components/Course/ViewCourse';
+import UserProfile from './components/UserProfile';
+import Student from './components/Student';
+import EditStudent from './components/Student/EditStudent';
 
 
 const App = () => {
@@ -30,6 +33,10 @@ const App = () => {
             <Route path='createCourse' element={<CreateCourse/>} />
             <Route path='createAssignment' element={<CreateAssignment/>} />
             <Route path='viewCourse/:id' element={<ViewCourse />} />
+            <Route path='settings' element={<UserProfile/>} />
+            <Route path='students' element={<Student/>}/>
+            <Route path='editStudent/:id' element={<EditStudent/>}/>
+
           </Route>
         </Routes>
       </BrowserRouter>
