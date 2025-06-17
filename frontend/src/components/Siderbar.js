@@ -40,6 +40,12 @@ const Sidebar = ({ isSidebarOpen }) => {
       view: "teacher",
     },
     {
+      href: "/dashboard/assignment",
+      icon: FaListAlt,
+      text: "Assignments",
+      view: "All",
+    },
+    {
       href: "/dashboard/settings",
       icon: IoIosSettings,
       text: "Settings",

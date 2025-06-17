@@ -12,6 +12,8 @@ import ViewCourse from './components/Course/ViewCourse';
 import UserProfile from './components/UserProfile';
 import Student from './components/Student';
 import EditStudent from './components/Student/EditStudent';
+import Assignment from './components/Assignment';
+import EditAssignment from './components/Assignment/EditAssignment';
 
 
 const App = () => {
@@ -36,7 +38,8 @@ const App = () => {
             <Route path='settings' element={<UserProfile/>} />
             <Route path='students' element={<Student/>}/>
             <Route path='editStudent/:id' element={<EditStudent/>}/>
-
+            <Route path="assignment"  element={<Assignment/>}/>
+            <Route path="editAssignment/:id"  element={<EditAssignment/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
