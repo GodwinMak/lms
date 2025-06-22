@@ -2,23 +2,28 @@ import React, { useEffect, useState, useMemo } from 'react'
 import Table from "./Table"
 import axios from 'axios'
 import {PRODUCTION_URL} from "../../utils/Api"
+import { useNavigate } from 'react-router-dom';
+
 
 const Answers = () => {
   const [data, setData] = useState([])
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const res = await axios.get(`${PRODUCTION_URL}/answer`) // use your actual URL
+        const res = await axios.get(`${PRODUCTION_URL}/answer/assignment`) // use your actual URL
+        console.log(res.data)
         const formatted = res.data.map(item => ({
           courseName: item.course.courseName,
-          assignmentName: item.assignmentName,
-          numberOfStudent: item.numberOfStudent,
+          assignmentName: item.title,
+          numberOfStudent: item.answerCount,
           id: item.id
         }))
         setData(formatted)
       } catch (err) {
-        console.error(err)
+        console.error("Hello",err, `${PRODUCTION_URL}/answer/assignment`)
       }
     }
     fetchSummary()
@@ -43,7 +48,7 @@ const Answers = () => {
         <div className="flex gap-2">
           <button
             className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-            onClick={() => console.log("Viewing answers for:", row.original.id)}
+            onClick={() => navigate(`/dashboard/assignment/${row.original.id}/answers`)}
           >
             View Answers
           </button>

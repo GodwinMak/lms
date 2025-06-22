@@ -12,6 +12,8 @@ exports.createUser = async (req, res) => {
     
 
     let data;
+    const dataCheck = await User.findOne({ where: { userId: Id } });
+    if (dataCheck) return res.status(400).json({ error: "User ID already exists" });
 
     if(role === "student"){
       data = await User.findOne({ where: { userId: Id } });
@@ -69,6 +71,10 @@ exports.login = async(req,res) =>{
 
    if(!user) {
     return res.status(404).json({ error: "User not found" });
+   }
+
+   if(user.status === "Not Allowed"){
+    return res.status(403).json({ message: "User is not allowed to login" });
    }
 
    const validPassword = await bcrypt.compare(password, user.password);
@@ -156,3 +162,25 @@ exports.updatePassword = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
+exports.updateUserStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // ❌ Block specific userId
+    if (user.userId === "2019-04-13686") {
+      return res.status(403).json({ message: "Not allowed to update this user's status" });
+    }
+
+    user.status = status;
+    await user.save();
+
+    res.status(200).json({ message: "Status updated", user });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating status", error: error.message });
+  }
+};

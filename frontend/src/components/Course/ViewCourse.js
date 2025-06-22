@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PRODUCTION_URL } from "../../utils/Api";
 import { useParams } from "react-router-dom";
+import {useAuthContext} from "../../hooks/useAuthContext"
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
+
 const ViewCourse = () => {
   const [course, setCourse] = useState(null);
+  const  {state} = useAuthContext();
+
+  console.log(state.userData)
   const { id } = useParams();
 
   useEffect(() => {
@@ -48,7 +53,7 @@ const ViewCourse = () => {
       }
     
       formData.append("assignmentId", assignmentId);
-      formData.append("courseId", course.id);
+      formData.append("studentId", state.userData.id);
       formData.append("Id", userData.Id);
       formData.append("assignmentDoc", file);
     

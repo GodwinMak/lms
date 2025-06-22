@@ -1,3 +1,5 @@
+const { all } = require("../routes/answers");
+
 // models/User.js
 module.exports = (sequelize, DataTypes) => {
     return (User = sequelize.define("user", {
@@ -25,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      status:{
+        type: DataTypes.ENUM("Allowed", "Not Allowed"),
+        allowNull: false,
+      }
     }));
   };
   

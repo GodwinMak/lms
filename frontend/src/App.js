@@ -15,6 +15,8 @@ import EditStudent from './components/Student/EditStudent';
 import Assignment from './components/Assignment';
 import EditAssignment from './components/Assignment/EditAssignment';
 import Answers from './components/Answers';
+import AssignmentAnswersPage from "./components/Answers/AssignmentAnswersPage"
+import Teacher from './components/Teacher';
 
 
 const App = () => {
@@ -42,6 +44,8 @@ const App = () => {
             <Route path="assignment"  element={<Assignment/>}/>
             <Route path="editAssignment/:id"  element={<EditAssignment/>}/>
             <Route path="answers"  element={<Answers/>}/>
+            <Route path="assignment/:assignmentId/answers" element={<AssignmentAnswersPage />} />
+            <Route path='teacher' element={<Teacher/>} />
           </Route>
         </Routes>
       </BrowserRouter>
