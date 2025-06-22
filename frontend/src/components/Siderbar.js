@@ -43,6 +43,12 @@ const Sidebar = ({ isSidebarOpen }) => {
       href: "/dashboard/assignment",
       icon: FaListAlt,
       text: "Assignments",
+      view: "teacher",
+    },
+    {
+      href: "/dashboard/answers",
+      icon: FaListAlt,
+      text: "Answers",
       view: "All",
     },
     {
@@ -59,7 +65,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       href: "/dashboard/students",
       icon: FaUsersCog,
       text: "Students",
-      view: "teacher",
+      view: " ",
     }
   ];
 

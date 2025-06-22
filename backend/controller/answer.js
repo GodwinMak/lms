@@ -7,13 +7,12 @@ const Course = db.courses;
 
 exports.createAnswer = async (req, res) => {
   try {
-    const { assignmentId, courseId, Id } = req.body;
+    const { assignmentId, studentId } = req.body;
     const answerDoc = req.file ? req.file.filename : null;
 
     const answer = await Answer.create({
       assignmentId,
-      courseId,
-      Id,
+      studentId,
       answerDoc,
     });
 
@@ -27,7 +26,7 @@ exports.createAnswer = async (req, res) => {
 exports.getAllAnswers = async (req, res) => {
   try {
     const answers = await Answer.findAll({
-      include: [User, Assignment, Course],
+      include: [ Assignment, Course],
     });
     res.json(answers);
   } catch (error) {
@@ -39,7 +38,7 @@ exports.getAllAnswers = async (req, res) => {
 exports.getAnswerById = async (req, res) => {
   try {
     const answer = await Answer.findByPk(req.params.id, {
-      include: [User, Assignment, Course],
+      include: [Assignment, Course],
     });
     if (!answer) return res.status(404).json({ error: "Answer not found" });
     res.json(answer);
@@ -79,5 +78,37 @@ exports.deleteAnswer = async (req, res) => {
     res.json({ message: "Answer deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getAssignmentSubmissionsSummary = async (req, res) => {
+  try {
+    console.log("heelo")
+    const data = await Assignment.findAll({
+      attributes: [
+        'id',
+        ['title', 'assignmentName'],
+        // [db.Sequelize.fn('COUNT', db.Sequelize.col('answers.studentId')), 'numberOfStudent']
+      ],
+      // include: [
+      //   {
+      //     model: db.courses,
+      //     attributes: [['courseName', 'courseName']]
+      //   },
+      //   // {
+      //   //   model: db.answers,
+      //   //   attributes: []
+      //   // }
+      // ],
+      // group: ['assignment.id', 'course.id'],
+      // raw: true,
+      // nest: true
+    });
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Internal server error" });
   }
 };
