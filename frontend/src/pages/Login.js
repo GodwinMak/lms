@@ -37,8 +37,9 @@ const Login = () => {
       dispatch({ type: "SIGN_IN_DATA", payload: res.data.user });
       navigate("/dashboard");
     } catch (error) {
-      console.error(error.response.data.message);
-      alert(error.response.data.message);
+      console.error(error);
+      alert(error?.response?.data?.message || "Server Error");
+
     } finally {
       setSubmitting(false);
     }

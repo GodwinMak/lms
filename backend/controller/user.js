@@ -8,7 +8,7 @@ const User = db.users;
 // Create a new user
 exports.createUser = async (req, res) => {
   try {
-    const { firstName, middleName, lastName, password, role, Id, } = req.body;
+    const { firstName, middleName, lastName, password, role, Id } = req.body;
     
 
     let data;
@@ -39,6 +39,7 @@ exports.createUser = async (req, res) => {
         password: hashedPassword,
         role,
         userId: Id || null,
+        status: "Not Allowed"
       });
     }
 
@@ -50,6 +51,7 @@ exports.createUser = async (req, res) => {
         password: hashedPassword,
         role,
         userId: Id || null,
+        status: "Not Allowed"
       });
     }
     

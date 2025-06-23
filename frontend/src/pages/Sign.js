@@ -47,7 +47,7 @@ const Sign = () => {
     } catch (error) {
       console.error(error);
       console.log(error)
-      alert("Login failed. Please check your credentials.");
+      alert(error?.response?.data?.message || "Server Error");
     } finally {
       setSubmitting(false);
     }
