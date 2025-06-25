@@ -17,11 +17,13 @@ const UserRouter = require("./routes/user")
 const CourseRouter = require("./routes/course");
 const AnswerRouter =  require("./routes/answers");
 const Assignment = require("./routes/assignment")
+const QuizRouter = require("./routes/quiz");
 
 app.use("/user", UserRouter)
 app.use("/course", CourseRouter)
 app.use("/answer", AnswerRouter)
 app.use("/assignment", Assignment)
+app.use("/quiz", QuizRouter)
 
 const PORT  = process.env.PORT || 8081
 

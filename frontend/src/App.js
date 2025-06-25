@@ -17,6 +17,10 @@ import EditAssignment from './components/Assignment/EditAssignment';
 import Answers from './components/Answers';
 import AssignmentAnswersPage from "./components/Answers/AssignmentAnswersPage"
 import Teacher from './components/Teacher';
+import CreateQuiz from './components/Quiz/CreateQuiz';
+import ViewQuiz from './components/Quiz/ViewQuiz';
+import Quiz from './components/Quiz';
+import TakeQuiz from './components/Quiz/TakeQuiz';
 
 
 const App = () => {
@@ -46,6 +50,10 @@ const App = () => {
             <Route path="answers"  element={<Answers/>}/>
             <Route path="assignment/:assignmentId/answers" element={<AssignmentAnswersPage />} />
             <Route path='teacher' element={<Teacher/>} />
+            <Route path= "quiz" element={<Quiz/>} />
+            <Route path='create-quiz' element={<CreateQuiz/>} />
+            <Route path='viewQuiz/:id' element={<ViewQuiz/>} />
+            <Route path='takeQuiz/:id' element={<TakeQuiz/>} />
           </Route>
         </Routes>
       </BrowserRouter>

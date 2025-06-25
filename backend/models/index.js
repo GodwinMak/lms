@@ -50,6 +50,10 @@ db.assignments.belongsTo(db.courses, { foreignKey: 'courseId' });
 db.assignments.hasMany(db.answers, { foreignKey: 'assignmentId' });
 db.answers.belongsTo(db.assignments, { foreignKey: 'assignmentId' });
 
+
+db.courses.hasMany(db.quizs, { foreignKey: 'courseId' });
+db.quizs.belongsTo(db.courses, { foreignKey: 'courseId' });
+
 db.quizs.hasMany(db.questions, { foreignKey: 'quizId' });
 db.questions.belongsTo(db.quizs, { foreignKey: 'quizId' });
 

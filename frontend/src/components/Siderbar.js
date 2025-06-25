@@ -72,6 +72,13 @@ const Sidebar = ({ isSidebarOpen }) => {
       icon: FaUsersCog,
       text: "Teacher",
       view: "teacher",
+    },
+    {
+      href: "## ",
+      icon: FaListAlt,
+      text: "Quiz",
+      view: "teacher",
+      dropdown: ["Quiz","Create Quiz"]
     }
   ];
 
