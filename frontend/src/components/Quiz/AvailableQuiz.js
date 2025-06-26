@@ -17,21 +17,24 @@ const AvailableQuizzes = () => {
         const now = new Date();
 
         const quizList = res.data.map((quiz) => {
-          const startTime = new Date(quiz.startTime); // assuming ISO string from backend
+          const startTime = new Date(quiz.startTime);
           const endTime = new Date(quiz.endTime);
-          const previewTime = new Date(endTime.getTime() + 20 * 60 * 1000); // 20 minutes later
+          const now = new Date();
+          const previewTime = new Date(endTime.getTime() + 20 * 60 * 1000);
 
           let status = "Not Yet Available";
           let action = "Unavailable";
 
-
-          if (now >= startTime && now <= endTime ) {
+          if (quiz.hasAttempted) {
+            status = "Done";
+            action = "Unavailable";
+            if(now >= previewTime){
+              action = "Preview Result";
+            }
+          } else if (!quiz.hasAttempted && now >= startTime && now <= endTime) {
             status = "Open";
             action = "Take Quiz";
-          } else if (now >= previewTime) {
-            status = "Preview Available";
-            action = "Preview";
-          } else if (now > endTime) {
+          } else if (!quiz.hasAttempted && now > endTime) {
             status = "Closed";
             action = "Unavailable";
           }

@@ -42,15 +42,40 @@ const Quiz = () => {
     },
     {
       Header: "Action",
-      Cell: ({ row }) => (
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-          onClick={() => navigate(`/dashboard/viewQuiz/${row.original.id}`)}
-        >
-          View Quiz
-        </button>
-      ),
-    },
+      Cell: ({ row }) => {
+        const now = new Date();
+        const startTime = new Date(row.original.startTime);
+        const endTime = new Date(row.original.endTime);
+    
+        const canEdit = now < startTime; // Only allow edit if quiz hasn't started
+    
+        return (
+          <div className="space-x-2">
+            <button
+              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+              onClick={() => navigate(`/dashboard/viewQuiz/${row.original.id}`)}
+            >
+              View Quiz
+            </button>
+            <button
+              disabled={!canEdit}
+              className={`px-3 py-1 rounded text-white ${
+                canEdit
+                  ? "bg-yellow-500 hover:bg-yellow-600"
+                  : "bg-gray-500 cursor-not-allowed"
+              }`}
+              onClick={() => {
+                if (canEdit) {
+                  navigate(`/dashboard/editquiz/${row.original.id}`);
+                }
+              }}
+            >
+              Edit Quiz
+            </button>
+          </div>
+        );
+      },
+    }
   ], [navigate]);
 
   const data = React.useMemo(() => quizzes, [quizzes]);

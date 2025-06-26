@@ -45,9 +45,9 @@ const TakeQuiz = () => {
         studentId,
       }));
   
-      const res = await axios.post(`${PRODUCTION_URL}/quiz/submit`, { answers: payload });
+      await axios.post(`${PRODUCTION_URL}/quiz/submit`, { answers: payload });
   
-      alert(`Quiz submitted successfully! You scored ${res.data.score}%`);
+      alert(`Quiz submitted successfully!`);
     } catch (err) {
       console.error("Error submitting quiz:", err);
       alert("Submission failed");

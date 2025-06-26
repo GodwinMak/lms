@@ -95,7 +95,6 @@ exports.createQuiz = async (req, res) => {
 
   exports.getStudentQuizStatus = async (req, res) => {
     const { studentId } = req.params;
-    console.log(studentId)
     try {
       const quizzes = await db.quizs.findAll({
         include: [
@@ -109,7 +108,7 @@ exports.createQuiz = async (req, res) => {
               {
                 model: db.studentAnswers,
                 where: { studentId },
-                required: false // allow quizzes with no answers yet
+                required: false
               }
             ]
           }
@@ -117,17 +116,18 @@ exports.createQuiz = async (req, res) => {
         order: [['createdAt', 'DESC']]
       });
   
-      const result = quizzes.map(quiz => {
-        const hasAnswered = quiz.questions.some(q =>
-          q.studentAnswers && q.studentAnswers.length > 0
+      const result = quizzes.map((quiz) => {
+        const hasAnswered = quiz.questions.some(
+          (q) => q.studentAnswers && q.studentAnswers.length > 0
         );
+  
         return {
           id: quiz.id,
           title: quiz.title,
           startTime: quiz.startTime,
           endTime: quiz.endTime,
           course: quiz.course,
-          hasAnswered
+          hasAttempted: hasAnswered // ✅ changed key name for clarity
         };
       });
   
@@ -137,6 +137,7 @@ exports.createQuiz = async (req, res) => {
       res.status(500).json({ message: "Failed to fetch quizzes" });
     }
   };
+  
 
 
   exports.submitQuiz = async (req, res) => {
