@@ -21,6 +21,8 @@ import CreateQuiz from './components/Quiz/CreateQuiz';
 import ViewQuiz from './components/Quiz/ViewQuiz';
 import Quiz from './components/Quiz';
 import TakeQuiz from './components/Quiz/TakeQuiz';
+import AvailableQuiz from './components/Quiz/AvailableQuiz';
+import PreviewQuiz from './components/Quiz/PreviewQuiz';
 
 
 const App = () => {
@@ -54,6 +56,8 @@ const App = () => {
             <Route path='create-quiz' element={<CreateQuiz/>} />
             <Route path='viewQuiz/:id' element={<ViewQuiz/>} />
             <Route path='takeQuiz/:id' element={<TakeQuiz/>} />
+            <Route path= "availablequiz" element={<AvailableQuiz/>} />
+            <Route path='previewQuiz/:id' element={<PreviewQuiz/>} />
           </Route>
         </Routes>
       </BrowserRouter>

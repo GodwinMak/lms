@@ -52,6 +52,12 @@ const Sidebar = ({ isSidebarOpen }) => {
       view: "teacher",
     },
     {
+      href: "/dashboard/availablequiz",
+      icon: FaListAlt,
+      text: "Available Quiz",
+      view: "student",
+    },
+    {
       href: "/dashboard/settings",
       icon: IoIosSettings,
       text: "Settings",
@@ -76,7 +82,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     {
       href: "## ",
       icon: FaListAlt,
-      text: "Quiz",
+      text: "Create Quiz",
       view: "teacher",
       dropdown: ["Quiz","Create Quiz"]
     }

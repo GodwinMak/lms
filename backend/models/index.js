@@ -38,6 +38,7 @@ db.quizs = require("./quiz.js")(sequelize, DataTypes);
 db.questions = require("./question.js")(sequelize, DataTypes);
 db.answerOptions = require("./answerOptions.js")(sequelize, DataTypes);
 db.studentAnswers = require("./studentAnswer.js")(sequelize, DataTypes);
+db.quizScores = require("./quizScore.js")(sequelize, DataTypes);
 
 // in your index.js or association file
 
@@ -65,6 +66,13 @@ db.studentAnswers.belongsTo(db.questions, { foreignKey: 'questionId' });
 
 db.users.hasMany(db.studentAnswers, { foreignKey: 'studentId' });
 db.studentAnswers.belongsTo(db.users, { foreignKey: 'studentId' });
+
+
+db.users.hasMany(db.quizScores, { foreignKey: 'studentId' });
+db.quizScores.belongsTo(db.users, { foreignKey: 'studentId' });
+
+db.quizs.hasMany(db.quizScores, { foreignKey: 'quizId' });
+db.quizScores.belongsTo(db.quizs, { foreignKey: 'quizId' });
 
 
 db.sequelize.sync({force: false}).then(() => {})
