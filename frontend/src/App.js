@@ -24,6 +24,17 @@ import TakeQuiz from './components/Quiz/TakeQuiz';
 import AvailableQuiz from './components/Quiz/AvailableQuiz';
 import PreviewQuiz from './components/Quiz/PreviewQuiz';
 import EditQuiz from './components/Quiz/EditQuiz';
+import CreateResearch from './components/Research/CreateResearch';
+import StudentResearch from './components/Research/StudentResearch';
+import TeacherUpdateResearch from './components/Research/TeacherUpdateResearch';
+
+import CreateDissertation from "./components/Dissertation/CreateDissertation";
+import StudentDissertation from "./components/Dissertation/StudentDissertation";
+import TeacherUpdateDissertation from "./components/Dissertation/TeacherUpdateDissertation";
+
+import CreateGrantWriting from "./components/GrantWriting/CreateGrantWriting";
+import StudentGrantWriting from "./components/GrantWriting/StudentGrantWriting";
+import TeacherUpdateGrantWriting from "./components/GrantWriting/TeacherUpdateGrantWriting";
 
 
 const App = () => {
@@ -60,6 +71,17 @@ const App = () => {
             <Route path= "availablequiz" element={<AvailableQuiz/>} />
             <Route path='previewQuiz/:id' element={<PreviewQuiz/>} />
             <Route path='editquiz/:id' element={<EditQuiz/>} />
+            <Route path='create-research' element={<CreateResearch/>} />
+            <Route path='research-proposal' element={<StudentResearch/>} />
+            <Route path='researchteacher' element={<TeacherUpdateResearch/>} />
+
+            <Route path='create-dissertation' element={<CreateDissertation/>} />
+            <Route path='dissertation' element={<StudentDissertation/>} />
+            <Route path='dissertationteacher' element={<TeacherUpdateDissertation/>} />
+
+            <Route path='create-grantwriting' element={<CreateGrantWriting/>} />
+            <Route path='research-proposal' element={<StudentGrantWriting/>} />
+            <Route path='grantteacher' element={<TeacherUpdateGrantWriting/>} />
           </Route>
         </Routes>
       </BrowserRouter>

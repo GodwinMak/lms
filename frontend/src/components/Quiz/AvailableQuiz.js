@@ -55,6 +55,7 @@ const AvailableQuizzes = () => {
     fetchQuizzes();
   }, []);
 
+
   return (
     <div className="text-gray-500 bg-gray-100 p-4 sm:ml-64 mt-14 dark:bg-gray-800 min-h-screen">
       <main className="px-4 sm:px-6 lg:px-8 pt-4">
@@ -121,7 +122,7 @@ const AvailableQuizzes = () => {
                       >
                         Take Quiz
                       </button>
-                    ) : quiz.action === "Preview" ? (
+                    ) : quiz.action === "Preview Result" ? (
                       <button
                         className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded"
                         onClick={() =>

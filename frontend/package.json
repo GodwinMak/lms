@@ -2,8 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "home": "https://learrning.healthnaih.tech/", 
+  "home": "https://learrning.healthnaih.tech/",
   "dependencies": {
+    "@cyntler/react-doc-viewer": "^1.17.0",
     "@heroicons/react": "^1.0.6",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

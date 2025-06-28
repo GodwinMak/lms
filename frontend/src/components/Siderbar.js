@@ -1,6 +1,6 @@
 import React from "react";
 import LinkItem from "./LinkItem";
-import { Link } from "react-router-dom";
+import { href, Link } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { FaChartBar, FaUsersCog, FaListAlt } from "react-icons/fa";
 import { BiTask } from "react-icons/bi";
@@ -58,6 +58,27 @@ const Sidebar = ({ isSidebarOpen }) => {
       view: "student",
     },
     {
+      href: "#",
+      icon: FaListAlt,
+      text: "Research Proposal",
+      view: "student",
+      dropdown: ["Create Research","Research Proposal"]
+    },
+    {
+      href: "#",
+      icon: FaListAlt,
+      text: "Dissertation",
+      view: "student",
+      dropdown: ["Create Dissertation","Dissertation"]
+    },
+    {
+      href: "#",
+      icon: FaListAlt,
+      text: "Grant Writing",
+      view: "student",
+      dropdown: ["Create GrantWriting","Grant Writing"]
+    },
+    {
       href: "/dashboard/settings",
       icon: IoIosSettings,
       text: "Settings",
@@ -80,12 +101,30 @@ const Sidebar = ({ isSidebarOpen }) => {
       view: "teacher",
     },
     {
-      href: "## ",
+      href: "#",
       icon: FaListAlt,
       text: "Create Quiz",
       view: "teacher",
       dropdown: ["Quiz","Create Quiz"]
-    }
+    },
+    {
+      href: "/dashboard/researchteacher",
+      icon: FaListAlt,
+      text: "Research Proposal",
+      view: "teacher",
+    },
+        {
+      href: "/dashboard/dissertationteacher",
+      icon: FaListAlt,
+      text: "Dissertation",
+      view: "teacher",
+    },
+    {
+      href: "/dashboard/grantteacher",
+      icon: FaListAlt,
+      text: "Grant Writing",
+      view: "teacher",
+    },
   ];
 
   const filteredLinks = links.filter(
